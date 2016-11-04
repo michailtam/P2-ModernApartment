@@ -11,8 +11,8 @@ public class TriggerAnimation : MonoBehaviour {
 
     void Awake() {
 		// IMPORTANT: Changed cause the existing vr camera was overwriten
-		if (vrViewer.GetInstanceID() == null) {
-			GvrViewer.Create();
+		if (vrViewer.GetInstanceID() == null) {		// Check if passed VR viewer is not null
+			GvrViewer.Create();		// Otherwise create one
             created = true; 
 		} 
     }
@@ -29,10 +29,11 @@ public class TriggerAnimation : MonoBehaviour {
 		GvrViewer.Instance.UpdateState(); //need to update the data here otherwise we dont get mouse clicks; this is because we are automatically creating the GVRSDK (seems like a bug)
 		if (GvrViewer.Instance.Triggered) {
 
-			if (stateMachine.GetCurrentAnimatorStateInfo (0).IsName ("GlobeIdle")) {
-				stateMachine.SetTrigger (firstTrigger);
+			// Toggle between the animations Rotate and Stop
+			if (stateMachine.GetCurrentAnimatorStateInfo (0).IsName ("GlobeIdle")) {	// Check if state is Idle
+				stateMachine.SetTrigger (firstTrigger);		// Run Rotate animation
 			} else {
-				stateMachine.SetTrigger (secondTrigger);
+				stateMachine.SetTrigger (secondTrigger);	// Run Stop Animation
 			}
 		}
     }
