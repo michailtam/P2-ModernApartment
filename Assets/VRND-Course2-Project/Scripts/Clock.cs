@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Clock : MonoBehaviour {
 
-	private float animationSpeed = 5.0f; //0.8f;
+	private float animationSpeed = 0.8f;	// Set to real seconds
 	private Transform secondsPointer;		// Second pointer
 	private Transform minutesPointer;		// Minute pointer
 	private Transform hoursPointer;			// Hour pointer
@@ -24,10 +24,10 @@ public class Clock : MonoBehaviour {
 		else
 			anim.speed = animationSpeed * Time.deltaTime;	
 
-		// Init pointer positions of the clock
+		// Init pointer positions of the clock (set to 15:35)
 		secondsPointer.Rotate(0,0,0);
-		minutesPointer.Rotate (0,0,0);
-		hoursPointer.Rotate (0,0,0);
+		minutesPointer.Rotate (0,0,210);
+		hoursPointer.Rotate (0,0,90);
 	}
 
 	void Update() 
@@ -39,7 +39,8 @@ public class Clock : MonoBehaviour {
 	void SetMinute ()
 	{
 		// Rotate the minute pointer 6 degrees if one minute passed
-		if (secondsPointer.eulerAngles.z > 359 && !isNewMinuteSet) {
+		if (secondsPointer.eulerAngles.z >= 359.9f  && !isNewMinuteSet) {
+			Debug.Log ("DEGREES: " + secondsPointer.eulerAngles.z);
 			minutesPointer.Rotate (0,0,6.0f);
 			isNewMinuteSet = true;
 		} 
