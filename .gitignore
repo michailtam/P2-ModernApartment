@@ -1,2 +1,5 @@
 Build
 Temp
+*.csproj
+*.sln
+obj
