@@ -3,13 +3,12 @@ using System.Collections;
 
 public class Clock : MonoBehaviour {
 
-	private float animationSpeed = 0.8f;
+	private float animationSpeed = 5.0f; //0.8f;
 	private Transform secondsPointer;		// Second pointer
 	private Transform minutesPointer;		// Minute pointer
 	private Transform hoursPointer;			// Hour pointer
-	private float currentMinute = 0.0f;
-	private float currentHour = 0.0f;
 	private bool isNewMinuteSet = false;	// Flag for the minutes
+	private bool isNewHourSet = false;		// Flag for the hours
 
 	// Use this for initialization
 	void Start () {
@@ -33,36 +32,31 @@ public class Clock : MonoBehaviour {
 
 	void Update() 
 	{
-		SetMinute ();
-		SetHour();
+		SetMinute ();	// Set the minute
+		SetHour();		// Set the hour
 	}
 
 	void SetMinute ()
 	{
-		// Rotate the minute pointer
-		if (secondsPointer.eulerAngles.z > 359.0f) {
-			// Check if minute was set. If not set the new minute
-			if (!isNewMinuteSet) {
-				currentMinute += 6.0f;
-				minutesPointer.Rotate (0,0,currentMinute);
-				isNewMinuteSet = true;
-			}
+		// Rotate the minute pointer 6 degrees if one minute passed
+		if (secondsPointer.eulerAngles.z > 359 && !isNewMinuteSet) {
+			minutesPointer.Rotate (0,0,6.0f);
+			isNewMinuteSet = true;
+		} 
+		else if (isNewMinuteSet && secondsPointer.eulerAngles.z > 0) {
+			isNewMinuteSet = false;		// Reset the minute flag
 		}
-		else
-			if (isNewMinuteSet) {
-				isNewMinuteSet = false;		// Reset the minute flag
-			}
 	}
 
 	void SetHour ()
 	{
-		Debug.Log ("DEGREE: " + minutesPointer.eulerAngles.z);
-
-		// Rotate the minute pointer
-		if (minutesPointer.eulerAngles.z == 360f) {
-			currentHour += 30.0f;
-			hoursPointer.Rotate (0,0,currentHour);
-			Debug.Log ("CURRENT HOUR: " + currentHour);
+		// // Rotate the hour pointer 30 degrees if one hour passed
+		if (minutesPointer.eulerAngles.z < 0 && !isNewHourSet) {
+			hoursPointer.Rotate (0,0,30.0f);
+			isNewHourSet = true;
+		} 
+		else if(isNewHourSet && minutesPointer.eulerAngles.z > 0) {
+			isNewHourSet = false;		// Reset the hour flag
 		}
 	}
 }
