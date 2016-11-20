@@ -1,5 +1,5 @@
 # Synopsis
-The Modern Apartment is a virtual reality app (VR) created in Unity 5.4.0f3 which can run on iPhone 6 and later.
+The Modern Apartment is a google cardboard virtual reality app (VR) created in Unity 5.4.0f3 which can run on iPhone 6 and later.
 The user can look around the apartment and execute some actions like spinning the Globe and teleporting to another 
 place inside the apartment.
 
